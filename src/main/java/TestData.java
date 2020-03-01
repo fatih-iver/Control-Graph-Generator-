@@ -1,70 +1,78 @@
+
 /*
  * Class which contains the method to analyze
  */
 public class TestData {
 
-    public void test1() {
+    public void test1(){
         int x = 3;
         int y = 5;
 
-        if (x <= 2) {
-            if (y >= 4) {
+        if(x <= 2){
+            if(y >= 4){
                 System.out.println("x <=2 and y >= 4");
-            } else {
+            }else{
                 System.out.println("x <= 2 and y < 4");
             }
-        } else {
-            if (y >= 4) {
+        }else{
+            if(y >= 4){
                 System.out.println("x > 2 and y >= 4");
-            } else {
+            }else{
                 System.out.println("x < 2 and y < 4");
             }
         }
     }
 
-    public void test2() {
+
+
+    public void test2(){
         int x = 4;
         int y = 4;
 
-        if (x < y) {
+        if(x < y){
             System.out.println("x < y");
-        } else if (y < x) {
+        }else
+        if(y < x){
             System.out.println("y < x");
-        } else {
+        }else{
             System.out.println("x = y");
         }
     }
 
 
-    public void test3() {
+
+    public void test3(){
         int x = 5;
         int y = 5;
 
-        while (x < y) {
+        while(x < y){
             System.out.println("x < y");
             ++x;
         }
     }
 
-    public void test4() {
+    public void test4(){
         int x = 4;
         int y = 5;
 
-        while (x < y) {
+        while(x < y){
             System.out.println("x < y");
             ++x;
         }
     }
 
-    public void test5() {
+    public void test5(){
         int x = 3;
         int y = 5;
 
-        while (x < y) {
+        while(x < y){
             System.out.println("x < y");
             ++x;
         }
     }
+
+
+
 
 
     public void IfElse(int x) {
@@ -81,7 +89,8 @@ public class TestData {
 
         if (x == y) {
             y = 6;
-        } else if (x == 8) {
+        } else
+        if (x == 8) {
             System.out.println("x == 7");
         } else {
             y = 1;
@@ -96,11 +105,14 @@ public class TestData {
 
         if (x == y) {
             y = 6;
-        } else if (x == 8) {
+        } else
+        if (x == 8) {
             y = 7;
-        } else if (x == 6) {
+        } else
+        if (x == 6) {
             y = 1;
-        } else if (x == 5) {
+        } else
+        if (x == 5) {
             y = 4;
         }
 
@@ -108,11 +120,11 @@ public class TestData {
     }
 
 
-    public void ForTest() {
+    public void ForTest(){
 
         int x = 3;
 
-        for (int i = 0; i < x; i++) {
+        for(int i = 0; i < x; i++){
 
             System.out.println("i");
 
@@ -121,16 +133,17 @@ public class TestData {
     }
 
 
-    public void Complex() {
-        int x = 2;
-        int y = 3;
 
-        for (int a = 1, b = 3; a < 4 && b < 4; a++, b++) {
+    public void Complex() {
+        int x= 2;
+        int y= 3;
+
+        for(int a = 1 , b = 3; a < 4 && b < 4; a++, b++) {
             x++;
             y++;
         }
 
-        while (x > 0 || y < 0) {
+        while(x > 0 || y < 0) {
             x--;
         }
     }
