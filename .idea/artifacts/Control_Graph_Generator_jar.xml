@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Control Graph Generator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Control_Graph_Generator_jar</output-path>
+    <root id="archive" name="Control Graph Generator.jar">
+      <element id="module-output" name="Control Graph Generator" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm-tree/7.3.1/asm-tree-7.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm/7.3.1/asm-7.3.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

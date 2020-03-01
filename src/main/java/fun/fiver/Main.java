@@ -6,18 +6,57 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        ClassReader classReader = new ClassReader(args[0]);
+        String currentDirectory = System.getProperty("user.dir");
+        File sourceFile = new File(currentDirectory, args[0]);
+
+        Runtime rt = Runtime.getRuntime();
+        String[] commands = {"javac", sourceFile.getAbsolutePath()};
+        Process proc = rt.exec(commands);
+
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+
+        String s;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+
+        while ((s = stdError.readLine()) != null) {
+            System.out.println(s);
+        }
+
+        URI u = sourceFile.getParentFile().toURI();
+        URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        Class<URLClassLoader> urlClass = URLClassLoader.class;
+        Method method = urlClass.getDeclaredMethod("addURL", URL.class);
+        method.setAccessible(true);
+        method.invoke(urlClassLoader, u.toURL());
+
+        ClassReader classReader = new ClassReader(args[0].replaceFirst("[.][^.]+$", ""));
         ClassNode classNode = new ClassNode();
         classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
 
@@ -34,7 +73,7 @@ public class Main {
 
          */
 
-        Map<Integer, String> lineNumberToSource = formLineNumberToSourceMap();
+        Map<Integer, String> lineNumberToSource = formLineNumberToSourceMap(sourceFile);
 
         for (MethodNode methodNode : methodNodeList) {
             System.out.println();
@@ -45,13 +84,12 @@ public class Main {
 
     }
 
-    private static Map<Integer, String> formLineNumberToSourceMap() {
+    private static Map<Integer, String> formLineNumberToSourceMap(File sourceFile) {
 
         Map<Integer, String> lineNumberToSource = new HashMap<>();
 
         try {
-            File file = new File("C:\\Users\\Fatih\\IdeaProjects\\Control Graph Generator\\src\\main\\java\\TestData.java");
-            FileReader fileReader = new FileReader(file);
+            FileReader fileReader = new FileReader(sourceFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             int i = 0;
